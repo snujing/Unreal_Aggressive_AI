@@ -44,6 +44,60 @@ NavigationSystem을 통해 AI가 플레이어를 쫓아갈 수 없다고 판단�
 
 
 
+## [Player] 일반/전투 상태에서 움직임
+
+기본 상태에서 마우스 회전과 이동 방향에 따라 캐릭터가 회전
+
+전투 상태에서는 마우스 회전만 캐릭터 회전에 영향
+
+```
+void AMyPlayer::Move(const FInputActionValue& Value)
+{
+	FVector2D MovementVector = Value.Get<FVector2D>();
+
+	// Player AnimInstance Combat BlenSpace에서 사용
+	Horizontal = MovementVector.Y;
+	Vertical = MovementVector.X;
+
+	if (Controller != nullptr && CanWalk && IsDrawing) {
+		// 전투 상태
+		// 캐릭터 방향은 변경되지 않고  이동만 변경 / 이동 방향에 맞추어 캐릭터가 자동 회전 Off
+		GetCharacterMovement()->bOrientRotationToMovement = false;
+
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FVector DirectionX = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		AddMovementInput(DirectionX, MovementVector.Y);
+
+		const FVector DirectionY = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+		AddMovementInput(DirectionY, MovementVector.X);
+	}
+	else if (Controller != nullptr && CanWalk && !IsClimbLadder && !IsDrawing) {
+		// 비전투상태
+		// 이동 방향에 맞추어 캐릭터가 자동 회전
+		GetCharacterMovement()->bOrientRotationToMovement = true;
+
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+		AddMovementInput(ForwardDirection, MovementVector.Y);
+		AddMovementInput(RightDirection, MovementVector.X);
+	}
+	else if (Controller != nullptr && CanWalk && IsClimbLadder) {
+		// 사다리를 타고 있다면 위,아래로만 이동가능, 회전 불가능
+		const FVector UpVector = GetActorUpVector();
+		AddMovementInput(UpVector, MovementVector.Y);
+
+		FVector OppositeForwardVector = -LadderForwardVector;
+		FRotator NewPlayerRotation = OppositeForwardVector.Rotation();
+		SetActorRotation(NewPlayerRotation);
+	}
+}
+
+```
+
 
 
 ## [Player] 파쿠르
