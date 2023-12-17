@@ -75,6 +75,28 @@ Player의 파쿠르 방식에서 아이디어를 받아 Trace를 통해 지형�
 
 설치 장소는 Player의 위치와 지형의 높이 차이로 생기는 간격을 Trace로 선정 
 
+![image](https://github.com/snujing/Unreal_Aggressive_AI/assets/57716676/eb9f1500-af13-4280-956c-c9b5cbde87ef)
+
+```
+EBTNodeResult::Type UBTTask_PlaceLadder::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) {
+	EBTNodeResult::Type Result = Super::ExecuteTask(OwnerComp, NodeMemory);
+	APirate_Character* Pirate_Character = Cast<APirate_Character>(OwnerComp.GetAIOwner()->GetPawn());
+
+	if (Pirate_Character == nullptr) { return EBTNodeResult::Failed; }
+
+	// Ladder 가져오기
+	ALadder* ClosestLadder = Cast<ALadder>(OwnerComp.GetBlackboardComponent()->GetValueAsObject(FName(TEXT("ClosestLadder"))));
+  
+	// 설치 중에 재설치를 방지
+	OwnerComp.GetBlackboardComponent()->SetValueAsBool(FName(TEXT("IsLadderPlaced")), true);
+        
+	// 애니메이션 재생
+	AnimInstance = Cast<UPirate_AnimInstance>(Pirate_Character->GetMesh()->GetAnimInstance());
+	AnimInstance->PlayPlaceLadderMontage();
+
+	return EBTNodeResult::Succeeded;
+}
+```
 
 
 
@@ -87,6 +109,8 @@ AI는 Player가 도달할 수 없는 지형에 있다고 판단하여 사다리�
 Player가 문제가 발생할 수 있는 행동 시 
 
 AI에게 Delay와 지속적인 경로 재탐색을 통해 상황에 맞는 행동을 하도록 변경
+
+
 
 
 
