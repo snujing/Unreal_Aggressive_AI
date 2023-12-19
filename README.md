@@ -12,6 +12,7 @@ AI가 상황에 따라 오브젝트를 파괴할 수 있고 지형을 올라갈 
 
 ## 데모 동영상
 
+[![Aggressice AI Video](https://i9.ytimg.com/vi/YzTrpclK-2Y/mqdefault.jpg?sqp=CIj0hawG-oaymwEmCMACELQB8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGHIgUyg6MA8=&rs=AOn4CLBzaqi5asuORTOn3nB5I9W0TeD-vw)](https://youtu.be/YzTrpclK-2Y)
 
 
 ## [AI] 전투 상태
