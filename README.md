@@ -15,6 +15,37 @@ AI가 상황에 따라 오브젝트를 파괴할 수 있고 지형을 올라갈 
 [![Aggressice AI Video](https://i9.ytimg.com/vi/YzTrpclK-2Y/mqdefault.jpg?sqp=CIj0hawG-oaymwEmCMACELQB8quKqQMa8AEB-AHUBoAC4AOKAgwIABABGHIgUyg6MA8=&rs=AOn4CLBzaqi5asuORTOn3nB5I9W0TeD-vw)](https://youtu.be/YzTrpclK-2Y)
 
 
+
+## 플레이어는 언제나 버그를 찾는다
+
+어떤 게임에서는 버그 플레이가 당연하게 사용되기도 한다
+
+게임의 약점을 사용해 플레이를 할 때면 개발자가 이를 보고 "깜짝 놀랄만한 대응책" 만들어 색다른 경험을 주지는 않을까 상상한다
+
+![image](https://github.com/snujing/Unreal_Aggressive_AI/assets/57716676/95e64cad-c77c-4393-a1b6-d66c708fdc8c)
+
+
+## 사다리를 설치해 올라가는 AI
+
+예상치 못한 경험을 주기 위한 방식을 생각하다 "AI가 스스로 사다리를 설치해 올라가면 재미있지 않을까?"
+
+라는 생각으로 프로젝트를 시작하게 되었습니다
+
+![29_](https://github.com/snujing/Unreal_Aggressive_AI/assets/57716676/2e3e2d24-4042-4a7b-97bf-02dd4cead9f6)
+
+메커니즘은 먼저 UNavigationSystemV1을 사용해 도달할 수 있는 경로가 있는지 체크한다
+
+![29_2](https://github.com/snujing/Unreal_Aggressive_AI/assets/57716676/15fef845-15f2-413e-b517-2b7d78654b91)
+
+가장 가까이에 있는 사다리를 줍고 EQS를 사용해 사다리 설치 장소를 탐색한다
+
+높이 차이로 생기는 영역과 플레이어 위치를 가중치로 넣어 선정한다
+
+![29_3](https://github.com/snujing/Unreal_Aggressive_AI/assets/57716676/0a51e7e5-fe16-4f96-bc17-d20942f72c59)
+
+사다리를 설치한 후 바로 올라가 플레이어를 쫓아간다 
+
+
 ## [AI] 전투 상태
 
 플레이어가 전투상태라면 AI도 전투 상태로 전환 / 대치 상태에서 주기적으로 공격을 시도
